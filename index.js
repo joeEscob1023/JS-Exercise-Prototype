@@ -9,24 +9,23 @@
 
 // EXAMPLE SOLUTION CODE:
 function Airplane(name) {
-    this.name = name;
-    this.isFlying = false;
-  }
-  Airplane.prototype.takeOff = function () {
-    this.isFlying = true;
-  };
-  Airplane.prototype.land = function () {
-    this.isFlying = false;
-  };
-  
-  
-  /*
+  this.name = name;
+  this.isFlying = false;
+}
+Airplane.prototype.takeOff = function () {
+  this.isFlying = true;
+};
+Airplane.prototype.land = function () {
+  this.isFlying = false;
+};
+
+/*
   // 👇 COMPLETE YOUR WORK BELOW 👇
   // 👇 COMPLETE YOUR WORK BELOW 👇
   // 👇 COMPLETE YOUR WORK BELOW 👇
   */
-  
-  /*
+
+/*
     TASK 1
       - Write a Person Constructor that initializes `name` and `age` from arguments.
       - All instances of Person should initialize with an empty `stomach` array.
@@ -38,18 +37,39 @@ function Airplane(name) {
       - Give instances of Person a method `.toString()`:
           + It should return a string with `name` and `age`. Example: "Mary, 50"
   */
-  
- function Person() {
-    
-  }
- 
- 
 
-  
-  
-  
-  
-  /*
+function Person(name, age) {
+  this.name = name;
+  this.age = age;
+  this.stomach = [];
+}
+
+Person.prototype.eat = function (edible) {
+  if (this.stomach.length < 10) {
+    this.stomach.push(edible);
+  }
+};
+
+Person.prototype.poop = function () {
+  this.stomach = [];
+};
+
+Person.prototype.toString = function () {
+  return `${this.name}, ${this.age}`;
+};
+
+const joe = new Person("Joe", 26);
+
+joe.eat("Pizza");
+joe.eat("Apple");
+joe.eat("Ramen");
+
+// console.log(joe.stomach);
+// joe.poop();
+// console.log(joe.stomach);
+// console.log(joe.toString());
+
+/*
     TASK 2
       - Write a Car constructor that initializes `model` and `milesPerGallon` from arguments.
       - All instances built with Car:
@@ -62,44 +82,65 @@ function Airplane(name) {
       - STRETCH: A car which runs out of `fuel` while driving can't drive any more distance:
           + The `drive` method should return a string "I ran out of fuel at x miles!" x being `odometer`.
   */
-  
- function Car() {
-    
-  }
-  
-  
-  /*
+
+function Car(model, milesPerGallon) {
+  (this.model = model),
+    (this.milesPerGallon = milesPerGallon),
+    (this.tank = 0),
+    (this.odometer = 0);
+}
+
+Car.prototype.fill = function (gallons) {
+  this.tank = this.tank + gallons;
+};
+
+const honda = new Car("civic", 35);
+
+honda.fill(20);
+console.log(honda);
+
+/*
     TASK 3
       - Write a Baby constructor subclassing Person.
       - Besides `name` and `age`, Baby takes a third argument to initialize `favoriteToy`.
       - Besides the methods on Person.prototype, babies have the ability to `.play()`:
           + Should return a string "Playing with x", x being the favorite toy.
   */
- function Baby() {
-   
-  }
- 
-  
-  /* 
+function Baby(name, age, favoriteToy) {
+  Person.call(this, name, age);
+  console.log(this);
+  this.favoriteToy = favoriteToy;
+}
+
+Baby.prototype = Object.create(Person.prototype);
+
+Baby.prototype.play = function () {
+  return `Plating with ${this.favoriteToy}`;
+};
+
+const baby1 = new Baby("Jax", 1, "plush");
+console.log(baby1);
+console.log(baby1.play());
+
+/* 
     TASK 4
     In your own words explain the four principles for the "this" keyword below:
-    1. 
-    2. 
-    3. 
-    4. 
+    1. call() lets you inherit attributes from another object
+    2. .bind() passes in the arguments and returns a brand new function that can be invoked later
+    3. .apply() invokes the function and passes the arguments as an array
+    4. .window is the top object that this can access. 
   */
-  
-  
-  ///////// END OF CHALLENGE /////////
 
-  /* 🛑🛑🛑🛑🛑🛑🛑🛑🛑🛑 Please do not modify anything below this line 🛑🛑🛑🛑🛑🛑🛑🛑🛑🛑 */
-function foo(){
-    return 'bar';
+///////// END OF CHALLENGE /////////
+
+/* 🛑🛑🛑🛑🛑🛑🛑🛑🛑🛑 Please do not modify anything below this line 🛑🛑🛑🛑🛑🛑🛑🛑🛑🛑 */
+function foo() {
+  return "bar";
 }
 
-export default{
-    foo,
-    Person, 
-    Car,
-    Baby
-}
+export default {
+  foo,
+  Person,
+  Car,
+  Baby,
+};
